@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sxt.core.service.CoreService;
 import com.sxt.util.SignUtil;
 
 public class CoreServlet extends HttpServlet{
@@ -43,9 +44,17 @@ public class CoreServlet extends HttpServlet{
 	}
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+		//设置编码格式
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
+		//核心处理service
+		String respMessage = CoreService.processRequest(request); 
+		
+		PrintWriter out = response.getWriter();
+		out.print(respMessage);
+		out.close();
 	}
 }
